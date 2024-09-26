@@ -18,6 +18,14 @@ struct Node* newNode(int data) {
     return temp;
 }
 
+bool searchKey(struct Node* head, int key) {
+    if (head == NULL)
+        return 0;
+    if (head->data == key)
+        return 1;
+    return searchKey(head->next, key);
+}
+
 struct Node* insertAtBeginning(struct Node* head, int value)
 {
     struct Node* new_node = newNode(value);
@@ -42,7 +50,6 @@ struct Node* deleteVal(struct Node* head, int value) {
     }
 
     if (temp == NULL) {
-        printf("Node with value %d not found!\n", value);
         return head;
     }
 
@@ -64,9 +71,9 @@ void List_destroy(struct Node * h)
 
 int main(){
 
-    char full_string[10];
+    char full_string[20];
     int window;
-    char action[10];
+    char action[20];
     
     char open[] = "open";
     char close[] = "close";
@@ -85,12 +92,12 @@ int main(){
         } else if ((strcmp(action, close) == 0)){
             head = deleteVal(head, window);
 
-        } else if ((strcmp(action, switches) == 0)){
+        } else if ((strcmp(action, switches) == 0) && (searchKey(head,window) == 1)){
             head = deleteVal(head, window);
             head = insertAtBeginning(head, window);
 
         } else {
-            printf("failed\n");
+            // printf("failed\n");
         }
         if (head != NULL) {
             printf("%d\n", head->data);
